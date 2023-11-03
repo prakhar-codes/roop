@@ -12,6 +12,8 @@ def run_command():
         others+="--skip-audio "
     if keep_fps_var.get():
         others+="--keep-fps "
+    if only_swapped_frames_var.get():
+        others+="--only-swapped-frames "
     if many_faces_var.get():
         others+="--many-faces "
     command = f"python run.py --target {target_entry.get()} --source {source_entry.get()} -o {output_entry.get()} --execution-provider {processor_entry.get()} --frame-processor {type_entry} {others}"
@@ -66,6 +68,9 @@ skip_audio_checkbox.pack()
 keep_fps_var = tk.IntVar()
 keep_fps_checkbox = tk.Checkbutton(app, text="keep-fps", variable=keep_fps_var)
 keep_fps_checkbox.pack()
+only_swapped_frames_var = tk.IntVar()
+only_swapped_frames_checkbox = tk.Checkbutton(app, text="only-swapped-frames", variable=only_swapped_frames_var)
+only_swapped_frames_checkbox.pack()
 many_faces_var = tk.IntVar()
 many_faces_checkbox = tk.Checkbutton(app, text="many-faces", variable=many_faces_var)
 many_faces_checkbox.pack()

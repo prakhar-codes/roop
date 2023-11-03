@@ -47,10 +47,23 @@ def extract_frames(target_path: str, fps: float = 30) -> bool:
     temp_frame_quality = roop.globals.temp_frame_quality * 31 // 100
     return run_ffmpeg(['-hwaccel', 'auto', '-i', target_path, '-q:v', str(temp_frame_quality), '-pix_fmt', 'rgb24', '-vf', 'fps=' + str(fps), os.path.join(temp_directory_path, '%04d.' + roop.globals.temp_frame_format)])
 
+# Rename files to account for missing files
+def arrange_files(directory_path: str):
+    files = os.listdir(directory_path)
+    files.sort()
+    counter = 1
+    for filename in files:
+        new_filename = f"{counter:04d}." + roop.globals.temp_frame_format
+        old_path = os.path.join(directory_path, filename)
+        new_path = os.path.join(directory_path, new_filename)
+        shutil.move(old_path, new_path)
+        counter += 1
 
 def create_video(target_path: str, fps: float = 30) -> bool:
     temp_output_path = get_temp_output_path(target_path)
     temp_directory_path = get_temp_directory_path(target_path)
+    if(roop.globals.only_swapped_frames):
+        arrange_files(temp_directory_path)
     output_video_quality = (roop.globals.output_video_quality + 1) * 51 // 100
     commands = ['-hwaccel', 'auto', '-r', str(fps), '-i', os.path.join(temp_directory_path, '%04d.' + roop.globals.temp_frame_format), '-c:v', roop.globals.output_video_encoder]
     if roop.globals.output_video_encoder in ['libx264', 'libx265', 'libvpx']:

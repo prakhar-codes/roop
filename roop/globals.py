@@ -9,6 +9,7 @@ keep_fps: Optional[bool] = None
 keep_frames: Optional[bool] = None
 skip_audio: Optional[bool] = None
 many_faces: Optional[bool] = None
+only_swapped_frames: Optional[bool] = None
 reference_face_position: Optional[int] = None
 reference_frame_number: Optional[int] = None
 similar_face_distance: Optional[float] = None

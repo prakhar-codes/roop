@@ -37,6 +37,7 @@ def parse_args() -> None:
     program.add_argument('--keep-frames', help='keep temporary frames', dest='keep_frames', action='store_true')
     program.add_argument('--skip-audio', help='skip target audio', dest='skip_audio', action='store_true')
     program.add_argument('--many-faces', help='process every face', dest='many_faces', action='store_true')
+    program.add_argument('--only-swapped-frames', help='write only swapped frames', dest='only_swapped_frames', action='store_true')
     program.add_argument('--reference-face-position', help='position of the reference face', dest='reference_face_position', type=int, default=0)
     program.add_argument('--reference-frame-number', help='number of the reference frame', dest='reference_frame_number', type=int, default=0)
     program.add_argument('--similar-face-distance', help='face distance used for recognition', dest='similar_face_distance', type=float, default=0.85)
@@ -60,6 +61,7 @@ def parse_args() -> None:
     roop.globals.keep_frames = args.keep_frames
     roop.globals.skip_audio = args.skip_audio
     roop.globals.many_faces = args.many_faces
+    roop.globals.only_swapped_frames = args.only_swapped_frames
     roop.globals.reference_face_position = args.reference_face_position
     roop.globals.reference_frame_number = args.reference_frame_number
     roop.globals.similar_face_distance = args.similar_face_distance

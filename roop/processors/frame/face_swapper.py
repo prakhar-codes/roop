@@ -2,6 +2,7 @@ from typing import Any, List, Callable
 import cv2
 import insightface
 import threading
+import os
 
 import roop.globals
 import roop.processors.frame.core
@@ -70,6 +71,8 @@ def process_frame(source_face: Face, reference_face: Face, temp_frame: Frame) ->
         target_face = find_similar_face(temp_frame, reference_face)
         if target_face:
             temp_frame = swap_face(source_face, target_face, temp_frame)
+        elif roop.globals.only_swapped_frames:
+            temp_frame = None
     return temp_frame
 
 
@@ -79,7 +82,10 @@ def process_frames(source_path: str, temp_frame_paths: List[str], update: Callab
     for temp_frame_path in temp_frame_paths:
         temp_frame = cv2.imread(temp_frame_path)
         result = process_frame(source_face, reference_face, temp_frame)
-        cv2.imwrite(temp_frame_path, result)
+        if result is None and roop.globals.only_swapped_frames:
+            os.remove(temp_frame_path)
+        else:
+            cv2.imwrite(temp_frame_path, result)
         if update:
             update()
 
