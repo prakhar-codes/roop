@@ -14,8 +14,8 @@ def run_command():
         others+="--keep-fps "
     if only_swapped_frames_var.get():
         others+="--only-swapped-frames "
-    if many_faces_var.get():
-        others+="--many-faces "
+    if all_faces_var.get():
+        others+="--all-faces "
     command = f"python run.py --target {target_entry.get()} --source {source_entry.get()} -o {output_entry.get()} --execution-provider {processor_entry.get()} --frame-processor {type_entry} {others}"
 
     app.destroy()
@@ -71,9 +71,9 @@ keep_fps_checkbox.pack()
 only_swapped_frames_var = tk.IntVar()
 only_swapped_frames_checkbox = tk.Checkbutton(app, text="only-swapped-frames", variable=only_swapped_frames_var)
 only_swapped_frames_checkbox.pack()
-many_faces_var = tk.IntVar()
-many_faces_checkbox = tk.Checkbutton(app, text="many-faces", variable=many_faces_var)
-many_faces_checkbox.pack()
+all_faces_var = tk.IntVar()
+all_faces_checkbox = tk.Checkbutton(app, text="all-faces", variable=all_faces_var)
+all_faces_checkbox.pack()
 
 # Create a button to run the command
 run_button = tk.Button(app, text="Run Command", command=run_command)

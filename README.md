@@ -36,7 +36,7 @@ python run.py [options]
 --keep-frames                                                              keep temporary frames
 --skip-audio                                                               skip target audio
 --only-swapped-frames                                                      write only swapped frames
---many-faces                                                               process every face
+--all-faces                                                                process every face
 --reference-face-position REFERENCE_FACE_POSITION                          position of the reference face
 --reference-frame-number REFERENCE_FRAME_NUMBER                            number of the reference frame
 --similar-face-distance SIMILAR_FACE_DISTANCE                              face distance used for recognition

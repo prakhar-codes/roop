@@ -6,7 +6,7 @@ from gfpgan.utils import GFPGANer
 import roop.globals
 import roop.processors.frame.core
 from roop.core import update_status
-from roop.face_analyser import get_many_faces
+from roop.face_analyser import get_all_faces
 from roop.typing import Frame, Face
 from roop.utilities import conditional_download, resolve_relative_path, is_image, is_video
 
@@ -78,9 +78,9 @@ def enhance_face(target_face: Face, temp_frame: Frame) -> Frame:
 
 
 def process_frame(source_face: Face, reference_face: Face, temp_frame: Frame) -> Frame:
-    many_faces = get_many_faces(temp_frame)
-    if many_faces:
-        for target_face in many_faces:
+    all_faces = get_all_faces(temp_frame)
+    if all_faces:
+        for target_face in all_faces:
             temp_frame = enhance_face(target_face, temp_frame)
     return temp_frame
 

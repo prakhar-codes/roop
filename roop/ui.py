@@ -96,9 +96,9 @@ def create_root(start: Callable[[], None], destroy: Callable[[], None]) -> ctk.C
     skip_audio_switch = ctk.CTkSwitch(root, text='Skip target audio', variable=skip_audio_value, cursor='hand2', command=lambda: setattr(roop.globals, 'skip_audio', skip_audio_value.get()))
     skip_audio_switch.place(relx=0.6, rely=0.6)
 
-    many_faces_value = ctk.BooleanVar(value=roop.globals.many_faces)
-    many_faces_switch = ctk.CTkSwitch(root, text='Many faces', variable=many_faces_value, cursor='hand2', command=lambda: setattr(roop.globals, 'many_faces', many_faces_value.get()))
-    many_faces_switch.place(relx=0.6, rely=0.65)
+    all_faces_value = ctk.BooleanVar(value=roop.globals.all_faces)
+    all_faces_switch = ctk.CTkSwitch(root, text='All faces', variable=all_faces_value, cursor='hand2', command=lambda: setattr(roop.globals, 'all_faces', all_faces_value.get()))
+    all_faces_switch.place(relx=0.6, rely=0.65)
 
     start_button = ctk.CTkButton(root, text='Start', cursor='hand2', command=lambda: select_output_path(start))
     start_button.place(relx=0.15, rely=0.75, relwidth=0.2, relheight=0.05)
