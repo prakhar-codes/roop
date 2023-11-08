@@ -14,8 +14,9 @@ frame_size = (1280, 720)  # Set the frame size to match your images
 # Get the list of frame files sorted by frame number
 frame_files = sorted([f for f in os.listdir(frame_folder) if f.endswith(".png")], key=lambda x: int(os.path.splitext(x)[0]))
 
-target_frame = len(frame_files)
+# target_frame = len(frame_files)
 # target_frame = x (frame to target)
+target_frame = 100
 target_filename = f"{target_frame:04}.png"
 
 # Create a VideoWriter object
@@ -40,3 +41,5 @@ out.release()
 progress_bar.close()
 
 print("Video created successfully.")
+1.69
+1.7618

@@ -14,8 +14,14 @@ def run_command():
         others+="--keep-fps "
     if only_swapped_frames_var.get():
         others+="--only-swapped-frames "
+    if use_temp_var.get():
+        others+="--use-temp "
     if all_faces_var.get():
         others+="--all-faces "
+    if many_faces_var.get():
+        others+="--many-faces "
+    if distance_entry.get():
+        others+="--similar-face-distance "+distance_entry.get()
     command = f"python run.py --target {target_entry.get()} --source {source_entry.get()} -o {output_entry.get()} --execution-provider {processor_entry.get()} --frame-processor {type_entry} {others}"
 
     app.destroy()
@@ -29,7 +35,7 @@ def run_command():
 app = tk.Tk()
 app.title("Face Swapper")
 
-app.geometry("600x400")
+app.geometry("600x500")
 
 # Create input fields and labels
 tk.Label(app, text="Target:").pack()
@@ -61,7 +67,18 @@ processor_entry = tk.Entry(app)
 processor_entry.insert(0, "dml")
 processor_entry.pack()
 
+tk.Label(app, text="Similar Face Distance:").pack()
+distance_entry = tk.Entry(app)
+distance_entry.insert(0, "2.0")
+distance_entry.pack()
+
 tk.Label(app, text="Others:").pack()
+all_faces_var = tk.IntVar()
+all_faces_checkbox = tk.Checkbutton(app, text="all-faces", variable=all_faces_var)
+all_faces_checkbox.pack()
+many_faces_var = tk.IntVar()
+many_faces_checkbox = tk.Checkbutton(app, text="many-faces", variable=many_faces_var)
+many_faces_checkbox.pack()
 skip_audio_var = tk.IntVar()
 skip_audio_checkbox = tk.Checkbutton(app, text="skip-audio", variable=skip_audio_var)
 skip_audio_checkbox.pack()
@@ -71,9 +88,9 @@ keep_fps_checkbox.pack()
 only_swapped_frames_var = tk.IntVar()
 only_swapped_frames_checkbox = tk.Checkbutton(app, text="only-swapped-frames", variable=only_swapped_frames_var)
 only_swapped_frames_checkbox.pack()
-all_faces_var = tk.IntVar()
-all_faces_checkbox = tk.Checkbutton(app, text="all-faces", variable=all_faces_var)
-all_faces_checkbox.pack()
+use_temp_var = tk.IntVar()
+use_temp_checkbox = tk.Checkbutton(app, text="use-temp", variable=use_temp_var)
+use_temp_checkbox.pack()
 
 # Create a button to run the command
 run_button = tk.Button(app, text="Run Command", command=run_command)

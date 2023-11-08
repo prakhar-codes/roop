@@ -35,8 +35,10 @@ def parse_args() -> None:
     program.add_argument('--frame-processor', help='frame processors (choices: face_swapper, face_enhancer, ...)', dest='frame_processor', default=['face_swapper'], nargs='+')
     program.add_argument('--keep-fps', help='keep target fps', dest='keep_fps', action='store_true')
     program.add_argument('--keep-frames', help='keep temporary frames', dest='keep_frames', action='store_true')
+    program.add_argument('--use-temp', help='use available temporary frames', dest='use_temp', action='store_true')
     program.add_argument('--skip-audio', help='skip target audio', dest='skip_audio', action='store_true')
     program.add_argument('--all-faces', help='process every face', dest='all_faces', action='store_true')
+    program.add_argument('--many-faces', help='handle many faces', dest='many_faces', action='store_true')
     program.add_argument('--only-swapped-frames', help='write only swapped frames', dest='only_swapped_frames', action='store_true')
     program.add_argument('--reference-face-position', help='position of the reference face', dest='reference_face_position', type=int, default=0)
     program.add_argument('--reference-frame-number', help='number of the reference frame', dest='reference_frame_number', type=int, default=0)
@@ -59,8 +61,10 @@ def parse_args() -> None:
     roop.globals.frame_processors = args.frame_processor
     roop.globals.keep_fps = args.keep_fps
     roop.globals.keep_frames = args.keep_frames
+    roop.globals.use_temp = args.use_temp
     roop.globals.skip_audio = args.skip_audio
     roop.globals.all_faces = args.all_faces
+    roop.globals.many_faces = args.many_faces
     roop.globals.only_swapped_frames = args.only_swapped_frames
     roop.globals.reference_face_position = args.reference_face_position
     roop.globals.reference_frame_number = args.reference_frame_number
@@ -153,22 +157,26 @@ def start() -> None:
     # process image to videos
     if predict_video(roop.globals.target_path):
         destroy()
-    update_status('Creating temporary resources...')
-    create_temp(roop.globals.target_path)
+    
     # extract frames
-    if roop.globals.keep_fps:
-        fps = detect_fps(roop.globals.target_path)
-        update_status(f'Extracting frames with {fps} FPS...')
-        extract_frames(roop.globals.target_path, fps)
+    if(not roop.globals.use_temp):
+        update_status('Creating temporary resources...')
+        create_temp(roop.globals.target_path)
+        if roop.globals.keep_fps:
+            fps = detect_fps(roop.globals.target_path)
+            update_status(f'Extracting frames with {fps} FPS...')
+            extract_frames(roop.globals.target_path, fps)
+        else:
+            update_status('Extracting frames with 30 FPS...')
+            extract_frames(roop.globals.target_path)
     else:
-        update_status('Extracting frames with 30 FPS...')
-        extract_frames(roop.globals.target_path)
+        update_status('Using available frames...')
     # process frame
     temp_frame_paths = get_temp_frame_paths(roop.globals.target_path)
     if temp_frame_paths:
         for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
             update_status('Progressing...', frame_processor.NAME)
-            frame_processor.process_video(roop.globals.source_path, temp_frame_paths)
+            frame_processor.process_video(roop.globals.target_path, roop.globals.source_path, temp_frame_paths)
             frame_processor.post_process()
     else:
         update_status('Frames not found...')

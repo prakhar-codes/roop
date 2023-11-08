@@ -127,6 +127,22 @@ def clean_temp(target_path: str) -> None:
     if os.path.exists(parent_directory_path) and not os.listdir(parent_directory_path):
         os.rmdir(parent_directory_path)
 
+def get_faces_directory_path(target_path: str) -> str:
+    target_directory_path = os.path.dirname(target_path)
+    faces_directory_path = os.path.join(target_directory_path, "faces")
+    os.makedirs(faces_directory_path, exist_ok=True)
+    return faces_directory_path
+
+def get_face_path(target_path: str, position: int) -> str:
+    faces_directory_path = get_faces_directory_path(target_path)
+    face_path = os.path.join(faces_directory_path, f'face{position}.png')
+    return face_path
+
+def clean_faces_path(target_path: str) -> None:
+    target_directory_path = os.path.dirname(target_path)
+    faces_directory_path = os.path.join(target_directory_path, "faces")
+    if os.path.exists(faces_directory_path):
+        shutil.rmtree(faces_directory_path)
 
 def has_image_extension(image_path: str) -> bool:
     return image_path.lower().endswith(('png', 'jpg', 'jpeg', 'webp'))

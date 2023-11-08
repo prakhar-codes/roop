@@ -2,4 +2,5 @@
 models
 temp
 content
+gfpgan
 __pycache__

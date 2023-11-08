@@ -47,8 +47,18 @@ def find_similar_face(frame: Frame, reference_face: Face) -> Optional[Face]:
     all_faces = get_all_faces(frame)
     if all_faces:
         for face in all_faces:
-            if hasattr(face, 'normed_embedding') and hasattr(reference_face, 'normed_embedding'):
-                distance = numpy.sum(numpy.square(face.normed_embedding - reference_face.normed_embedding))
-                if distance < roop.globals.similar_face_distance:
-                    return face
+            if(is_similar_face(face, reference_face)): return face
     return None
+
+def is_similar_face(face: Face, reference_face: Face) -> bool:
+    if(get_faces_distance(face, reference_face)<roop.globals.similar_face_distance):
+        return True
+    else:
+        return False
+
+def get_faces_distance(face: Face, reference_face: Face) -> int:
+    if hasattr(face, 'normed_embedding') and hasattr(reference_face, 'normed_embedding'):
+        distance = numpy.sum(numpy.square(face.normed_embedding - reference_face.normed_embedding))
+        return distance
+    else:
+        return numpy.nan

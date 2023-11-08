@@ -34,10 +34,12 @@ python run.py [options]
 --frame-processor FRAME_PROCESSOR [FRAME_PROCESSOR ...]                    frame processors (choices: face_swapper, face_enhancer, ...)
 --keep-fps                                                                 keep target fps
 --keep-frames                                                              keep temporary frames
+--use-temp                                                                 use available temporary frames
 --skip-audio                                                               skip target audio
 --only-swapped-frames                                                      write only swapped frames
 --all-faces                                                                process every face
---reference-face-position REFERENCE_FACE_POSITION                          position of the reference face
+--many-faces                                                               handle many faces
+--reference-face-position REFERENCE_FACE_POSITION                          position of the reference face (index)
 --reference-frame-number REFERENCE_FRAME_NUMBER                            number of the reference frame
 --similar-face-distance SIMILAR_FACE_DISTANCE                              face distance used for recognition
 --temp-frame-format {jpg,png}                                              image format used for frame extraction
