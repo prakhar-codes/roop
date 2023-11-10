@@ -22,6 +22,10 @@ def run_command():
         others+="--many-faces "
     if distance_entry.get():
         others+="--similar-face-distance "+distance_entry.get()
+    if from_entry.get() != 'start':
+        others+='--from-frame '+from_entry.get()
+    if to_entry.get() != 'end':
+        others+='--to-frame '+to_entry.get()
     command = f"python run.py --target {target_entry.get()} --source {source_entry.get()} -o {output_entry.get()} --execution-provider {processor_entry.get()} --frame-processor {type_entry} {others}"
 
     app.destroy()
@@ -91,6 +95,16 @@ only_swapped_frames_checkbox.pack()
 use_temp_var = tk.IntVar()
 use_temp_checkbox = tk.Checkbutton(app, text="use-temp", variable=use_temp_var)
 use_temp_checkbox.pack()
+
+tk.Label(app, text="From Frame:").pack()
+from_entry = tk.Entry(app)
+from_entry.insert(0, "start")
+from_entry.pack()
+
+tk.Label(app, text="To Frame:").pack()
+to_entry = tk.Entry(app)
+to_entry.insert(0, "end")
+to_entry.pack()
 
 # Create a button to run the command
 run_button = tk.Button(app, text="Run Command", command=run_command)

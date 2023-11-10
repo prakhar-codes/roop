@@ -34,6 +34,8 @@ python run.py [options]
 --frame-processor FRAME_PROCESSOR [FRAME_PROCESSOR ...]                    frame processors (choices: face_swapper, face_enhancer, ...)
 --keep-fps                                                                 keep target fps
 --keep-frames                                                              keep temporary frames
+--from-frame FROM_FRAME                                                    frame from which video is to be swapped
+--to-frame TO_FRAME                                                        frame upto which video is to be swapped
 --use-temp                                                                 use available temporary frames
 --skip-audio                                                               skip target audio
 --only-swapped-frames                                                      write only swapped frames
