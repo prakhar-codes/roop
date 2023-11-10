@@ -39,7 +39,7 @@ def run_command():
 app = tk.Tk()
 app.title("Face Swapper")
 
-app.geometry("600x500")
+app.geometry("600x600")
 
 # Create input fields and labels
 tk.Label(app, text="Target:").pack()
