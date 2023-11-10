@@ -21,11 +21,11 @@ def run_command():
     if many_faces_var.get():
         others+="--many-faces "
     if distance_entry.get():
-        others+="--similar-face-distance "+distance_entry.get()
+        others+="--similar-face-distance "+distance_entry.get()+' '
     if from_entry.get() != 'start':
-        others+='--from-frame '+from_entry.get()
+        others+=' --from-frame '+from_entry.get()+' '
     if to_entry.get() != 'end':
-        others+='--to-frame '+to_entry.get()
+        others+='--to-frame '+to_entry.get()+' '
     command = f"python run.py --target {target_entry.get()} --source {source_entry.get()} -o {output_entry.get()} --execution-provider {processor_entry.get()} --frame-processor {type_entry} {others}"
 
     app.destroy()
