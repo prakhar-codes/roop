@@ -178,10 +178,11 @@ def start() -> None:
     # process frame
     temp_frame_paths = get_temp_frame_paths(roop.globals.target_path)
     if temp_frame_paths:
+        from_frame = (roop.globals.from_frame - 1) if roop.globals.from_frame!=0 else 0
         to_frame = len(temp_frame_paths) if roop.globals.to_frame==0 else roop.globals.to_frame
         for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
             update_status('Progressing...', frame_processor.NAME)
-            frame_processor.process_video(roop.globals.target_path, roop.globals.source_path, temp_frame_paths[roop.globals.from_frame : to_frame])
+            frame_processor.process_video(roop.globals.target_path, roop.globals.source_path, temp_frame_paths[from_frame : to_frame])
             frame_processor.post_process()
     else:
         update_status('Frames not found...')
