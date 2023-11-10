@@ -41,5 +41,3 @@ out.release()
 progress_bar.close()
 
 print("Video created successfully.")
-1.69
-1.7618

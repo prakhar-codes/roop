@@ -45,9 +45,13 @@ def get_all_faces(frame: Frame) -> Optional[List[Face]]:
 
 def find_similar_face(frame: Frame, reference_face: Face) -> Optional[Face]:
     all_faces = get_all_faces(frame)
-    if all_faces:
+    if len(all_faces)==1:
+        if(is_similar_face(all_faces[0], reference_face)): return all_faces[0]
+    elif len(all_faces) > 1:
+        face_distances = []
         for face in all_faces:
-            if(is_similar_face(face, reference_face)): return face
+            face_distances.append(get_faces_distance(face, reference_face))
+        return all_faces[face_distances.index(min(face_distances))]
     return None
 
 def is_similar_face(face: Face, reference_face: Face) -> bool:
