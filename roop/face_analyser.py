@@ -51,7 +51,8 @@ def find_similar_face(frame: Frame, reference_face: Face) -> Optional[Face]:
         face_distances = []
         for face in all_faces:
             face_distances.append(get_faces_distance(face, reference_face))
-        return all_faces[face_distances.index(min(face_distances))]
+        similar_face = all_faces[face_distances.index(min(face_distances))]
+        if(is_similar_face(similar_face, reference_face)): return similar_face
     return None
 
 def is_similar_face(face: Face, reference_face: Face) -> bool:
